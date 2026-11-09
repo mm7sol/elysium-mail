@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#04181c" />
+<title>Elysium Mail — Docs</title>
+<link rel="icon" type="image/png" href="./logo/favicon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="./css/landing.css" />
+<style>
+  .docs{max-width:880px;margin:0 auto;padding:40px 24px 80px}
+  .docs h1{font-family:'Instrument Serif',serif;font-size:44px;margin:0 0 8px}
+  .docs h2{font-family:'Instrument Serif',serif;font-size:26px;margin:40px 0 10px;border-top:1px solid rgba(151,252,228,.12);padding-top:24px}
+  .docs h3{font-size:16px;margin:20px 0 6px;color:#97fce4}
+  .docs p,.docs li{color:#9fb8bd;line-height:1.6;font-size:15px}
+  .docs code{background:rgba(151,252,228,.08);padding:2px 6px;border-radius:4px;font-size:13px;color:#97fce4}
+  .docs pre{background:rgba(4,24,28,.7);border:1px solid rgba(151,252,228,.12);border-radius:10px;padding:14px 16px;overflow:auto;font-size:13px;color:#ffe9c8}
+  .docs ul{padding-left:20px}
+  .docs a{color:#97fce4}
+  .docs table{width:100%;border-collapse:collapse;margin:12px 0}
+  .docs th,.docs td{padding:8px 10px;border-bottom:1px solid rgba(151,252,228,.1);font-size:14px;text-align:left}
+  .docs th{color:#97fce4;font-weight:600}
+</style>
+</head>
+<body class="landing">
+<header class="l-nav">
+  <a class="l-brand" href="./index.html"><img class="logo-img" src="./logo/logo-dark.png" alt="Elysium Mail logo" />Elysium Mail</a>
+  <a class="l-cta" href="./app.html">Open inbox <span>→</span></a>
+</header>
+<main class="docs">
+  <p class="l-kicker">Documentation</p>
+  <h1>How Elysium Mail works</h1>
+  <p>Elysium Mail is wallet mail for <a href="https://elysium.kinetiq.xyz" target="_blank" rel="noopener">Elysium</a>, Kinetiq's L2 for Hyperliquid. Your wallet address is your mailbox: anyone can write to you at <code>0x…</code> or at your <code>.els</code> name, and every message is signed by the sender's wallet.</p>
+
+  <h2>Concepts</h2>
+  <ul>
+    <li><b>Wallet = identity.</b> No account, no password, no phone number. You sign in by signing one readable sentence with your wallet. The session lasts 24 hours and the signature can never move funds.</li>
+    <li><b>Name = address.</b> A <code>.els</code> name (e.g. <code>maya.els</code>) resolves on-chain to a wallet address. People write to the name, the name resolves to the wallet.</li>
+    <li><b>Signed messages.</b> Each message carries a <code>personal_sign</code> signature over its exact text, so authorship is provable and impersonation is impossible.</li>
+  </ul>
+
+  <h2>Sign in</h2>
+  <p>Open <a href="./app.html">the app</a> and click <b>Connect wallet &amp; sign in</b>. Any EIP-1193 wallet works (Hyperliquid Wallet, MetaMask, Rabby, and others). The app requests your accounts, then switches (or adds) the Elysium chain:</p>
+  <table>
+    <tr><th>Field</th><th>Value</th></tr>
+    <tr><td>Chain name</td><td>Elysium</td></tr>
+    <tr><td>Chain ID</td><td><code>99901</code> (0x1863d)</td></tr>
+    <tr><td>RPC</td><td><code>https://rpc.elysium.kinetiq.xyz</code></td></tr>
+    <tr><td>Native currency</td><td>HYPE (18 decimals)</td></tr>
+    <tr><td>Explorer</td><td><code>https://elysium.kinetiq.xyz</code></td></tr>
+  </table>
+  <p>If your wallet refuses to add the chain, sign-in still succeeds with your address, but on-chain <code>.els</code> resolution will be unavailable until the chain is added manually.</p>
+
+  <h2>Identity &amp; .els names</h2>
+  <p>Your identity is your wallet address. If you own a <code>.els</code> name registered on ELSnames and set it as your primary name, Elysium Mail resolves it on-chain and shows it instead of the raw address.</p>
+  <h3>Forward resolution (name → address)</h3>
+  <pre>registry.resolver(namehash("maya.els"))  → resolver address
+resolver.addr(namehash("maya.els"))     → 0x9c4e…21af</pre>
+  <h3>Reverse resolution (address → name)</h3>
+  <pre>namehash("9c4e…21af.addr.reverse") → resolver → name()</pre>
+  <p>Names are managed by <a href="https://www.elsname.xyz/" target="_blank" rel="noopener">ELSnames</a> (<code>@ELSnames</code>), deployed on Elysium mainnet:</p>
+  <table>
+    <tr><th>Contract</th><th>Address</th></tr>
+    <tr><td>Registry</td><td><code>0x5752aCFe755F20dc38F481829587A59a0bF5107c</code></td></tr>
+    <tr><td>Resolver</td><td><code>0x3ba6E08b2041A2D86BB4849369ad2f6C1B3A073E</code></td></tr>
+    <tr><td>Controller</td><td><code>0xAC6aa1587b715b313a1fA83c5B6aC7a91e8Ae728</code></td></tr>
+    <tr><td>Reverse registrar</td><td><code>0x1Bb4791eF4C29A4EdDCf958c273cE96F300aaE16</code></td></tr>
+    <tr><td>USDC</td><td><code>0xb47c4C8F73F009CC0C0d3f92B388d13E293F0B65</code></td></tr>
+    <tr><td>Auction</td><td><code>0x6220A83bFcdA5CD6E55A8AaA8B67b32a4831826d</code></td></tr>
+  </table>
+  <p>Pricing (per year, paid in USDC): 5+ chars $10, 4 chars $25, 3 chars $60, 2 chars $150, 1 char sold by auction. Discounts up to 50% for Hyperliquid history. Buy or renew at <a href="https://www.elsname.xyz/app/" target="_blank" rel="noopener">elsname.xyz/app</a>.</p>
+
+  <h2>Composing mail</h2>
+  <ul>
+    <li><b>To</b> accepts a wallet address (<code>0x…</code>) or a <code>.els</code> name. When you type a <code>.els</code> name, Elysium Mail resolves it on-chain and shows the target address under the field.</li>
+    <li><b>Subject, body</b> as usual. The signature preview is computed over <code>to + subject + body</code>.</li>
+    <li><b>Send</b> stores the message in the Sent folder and shows a toast with the resolved recipient.</li>
+    <li>Drafts, archive, trash, starred, search, reply and forward work as in a classic inbox.</li>
+  </ul>
+
+  <h2>Contacts</h2>
+  <p>Add a contact by name (a <code>.els</code> name is resolved on-chain automatically) and address. Click <b>Write</b> to open a compose window pre-filled with the recipient.</p>
+
+  <h2>Settings</h2>
+  <p>Shows your connected wallet address and your resolved <code>.els</code> name. If you have none, a link takes you to ELSnames to register one. Notifications toggle is stored locally.</p>
+
+  <h2>Architecture</h2>
+  <ul>
+    <li><b>Static site</b> (HTML/CSS/JS), no backend, no build step. Served by Vercel.</li>
+    <li><b>Storage</b>: messages, contacts, session and identity are stored in <code>localStorage</code> (keys prefixed <code>elys_</code>). This is a demo: there is no server-side mailbox yet.</li>
+    <li><b>On-chain reads</b>: <code>.els</code> resolution goes directly to the Elysium RPC (<code>rpc.elysium.kinetiq.xyz</code>) via ethers.js v6, in the browser. No API key required.</li>
+    <li><b>Wallet</b>: native EIP-1193 provider (<code>window.ethereum</code>). No Privy, no embedded wallets.</li>
+  </ul>
+
+  <h2>Files</h2>
+  <pre>index.html          Landing page
+app.html            Inbox application
+docs.html           This page
+css/landing.css     Landing styles (Elysium palette)
+css/app.css         App styles + toast + card
+js/landing.js       Landing interactions
+js/app.js           App logic (folders, compose, contacts, session, identity)
+js/els.js           .els resolution (forward + reverse) on Elysium
+logo/               logo.png (original), logo-dark.png (512 tile), favicon.png (128)
+vercel.json         cleanUrls: true</pre>
+
+  <h2>Run locally</h2>
+  <pre>cd "elysium-mail"
+npx serve .</pre>
+  <p>Then open <code>http://localhost:3000</code>.</p>
+
+  <h2>Deploy</h2>
+  <pre># preview
+vercel
+# production
+vercel --prod
+
+  <h2>Current limitations</h2>
+  <ul>
+    <li><b>Messages are local.</b> There is no server-side mailbox yet: messages, drafts and contacts live in <code>localStorage</code>. They are not synced across devices or delivered to other users.</li>
+    <li><b>Signature is simulated.</b> The signature shown is a deterministic hash, not a real <code>personal_sign</code>. Real signing will be wired to the wallet.</li>
+    <li><b>Encryption is described, not implemented.</b> Mailboxes are not yet AES-256-GCM encrypted at rest.</li>
+    <li><b>Buying a .els name</b> happens on <a href="https://www.elsname.xyz/app/" target="_blank" rel="noopener">ELSnames</a>, not inside this app.</li>
+  </ul>
+
+  <h2>Links</h2>
+  <ul>
+    <li>App: <a href="./app.html">www.elysiummail.xyz/app</a></li>
+    <li>ELSnames: <a href="https://www.elsname.xyz/" target="_blank" rel="noopener">elsname.xyz</a></li>
+    <li>Elysium: <a href="https://elysium.kinetiq.xyz" target="_blank" rel="noopener">elysium.kinetiq.xyz</a></li>
+    <li>Twitter: <a href="https://x.com/elysium_mail" target="_blank" rel="noopener">@elysium_mail</a></li>
+  </ul>
+</main>
+<footer class="l-foot">
+  <span>Elysium Mail · Hyperliquid</span>
+  <nav><a href="./index.html">Home</a><a href="./app.html">Inbox</a><a href="./docs.html">Docs</a><a href="https://x.com/elysium_mail" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>@elysium_mail</a></nav>
+</footer>
+<script src="./js/landing.js"></script>
+<script>(function(){var b=document.getElementById('caCopy');if(!b)return;b.addEventListener('click',function(){var a=document.getElementById('caAddr');if(!a)return;navigator.clipboard.writeText(a.textContent).then(function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy';},1500);}).catch(function(){b.textContent='Copy failed';});});})();</script>
+</body>
+</html>

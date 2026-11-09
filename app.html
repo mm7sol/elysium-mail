@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#04181c" />
+<title>Elysium Mail — inbox</title>
+<link rel="icon" type="image/png" href="./logo/favicon.png" />
+<link rel="stylesheet" href="./css/app.css" />
+</head>
+<body>
+<div id="gate" class="gate">
+  <div class="gate-card">
+    <div class="brand"><img class="mark-img" src="./logo/logo-dark.png" alt="Elysium Mail logo" /><b>Elysium Mail</b></div>
+    <h1>Your wallet is your mailbox.</h1>
+    <p>Sign once, stay signed in for 24 hours. No email account, no password.</p>
+    <button id="connectBtn" class="btn primary">Connect wallet &amp; sign in</button>
+    <p class="ca-line">CA : 0x7c478e004e3524f58dd109229effb0ebd93a15dc</p>
+    <p class="mut">Works with Hyperliquid Wallet, MetaMask, Rabby and any EVM wallet.</p>
+    <p class="mut">Names resolve on-chain on Elysium · <a href="https://www.elsname.xyz/" target="_blank" rel="noopener">.els by ELSnames ↗</a></p>
+    <a href="./index.html">← About Elysium Mail</a>
+  </div>
+</div>
+
+<div id="app" class="app hidden">
+  <aside class="side">
+    <div class="side-top"><button id="menuBtn">☰</button><a class="brand" href="./index.html"><img class="mark-img" src="./logo/logo-dark.png" alt="Elysium Mail logo" /><b>Elysium Mail</b></a></div>
+    <button id="newMailBtn" class="btn primary compose">✎ New mail</button>
+    <nav id="folders">
+      <button data-f="inbox" class="active">▤ Inbox <i id="cInbox"></i></button>
+      <button data-f="starred">★ Starred</button>
+      <button data-f="sent">➤ Sent</button>
+      <button data-f="drafts">✎ Drafts</button>
+      <button data-f="archive">▣ Archive</button>
+      <button data-f="trash">✕ Trash</button>
+    </nav>
+    <p class="label">People</p>
+    <nav>
+      <button data-f="contacts">☺ Contacts</button>
+      <button data-f="notifications">◉ Notifications <i id="cNotif"></i></button>
+    </nav>
+    <p class="label">Account</p>
+    <nav><button data-f="settings">⚙ Settings</button></nav>
+    <p class="foot">Elysium · wallet-signed mail<br /><span id="who"></span><br /><a class="link" href="./docs.html">Docs</a><br /><a class="link" href="https://www.elsname.xyz/app/" target="_blank" rel="noopener">Get a .els name ↗</a><br /><a class="link" href="https://x.com/elysium_mail" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>@elysium_mail</a><br /><button id="logout" class="link">Sign out</button></p>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <input id="search" placeholder="⌕ Search mail, names, addresses" />
+      <button id="refresh" title="Refresh">↻</button>
+      <span id="session"></span>
+    </div>
+
+    <section id="view-mail" class="cols">
+      <div class="list"><div class="list-head"><b id="folderTitle">Inbox</b><span id="folderCount"></span></div><div id="threadList"></div></div>
+      <div class="read"><div id="reader"><p class="mut">Select a message.</p></div></div>
+    </section>
+
+    <section id="view-contacts" class="panel hidden">
+      <h2>Contacts</h2>
+      <div class="row"><input id="cName" placeholder="name.els" /><input id="cAddr" placeholder="0x…" /><button id="cAdd" class="btn primary">Add</button></div>
+      <div id="contactList"></div>
+    </section>
+
+    <section id="view-settings" class="panel hidden">
+      <h2>Settings</h2>
+      <label>Identity</label>
+      <div class="card" id="idCard"><p class="id-line" id="idAddr">Not connected</p><p class="id-line id-name" id="idName"></p></div>
+      <p class="mut">Your identity is your wallet. Your <code>.els</code> name resolves on-chain via ELSnames. <a href="https://www.elsname.xyz/app/" target="_blank" rel="noopener">Get or manage a .els name ↗</a></p>
+      <label><input type="checkbox" id="notifToggle" checked /> Enable notifications</label>
+    </section>
+
+    <section id="view-notifications" class="panel hidden">
+      <h2>Notifications</h2>
+      <div id="notifList"></div>
+    </section>
+  </main>
+</div>
+
+<div id="compose" class="modal hidden">
+  <div class="modal-card">
+    <div class="modal-head"><b>New mail</b><button id="composeClose">✕</button></div>
+    <label>To</label><input id="mTo" placeholder="name.els or 0x…" />
+    <p class="mut" id="toHint"></p>
+    <label>Subject</label><input id="mSub" placeholder="Subject" />
+    <label>Message (will be personal_sign'ed)</label><textarea id="mBody" rows="7" placeholder="Write…"></textarea>
+    <p class="mut" id="sigPreview">signature: —</p>
+    <div class="row end"><button id="mDiscard" class="btn ghost">Discard</button><button id="mDraft" class="btn ghost">Save draft</button><button id="mSend" class="btn primary">Send</button></div>
+  </div>
+</div>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js" defer></script>
+<script src="./js/els.js" defer></script>
+<script src="./js/app.js" defer></script>
+<script>(function(){var b=document.getElementById('caCopy');if(!b)return;b.addEventListener('click',function(){var a=document.getElementById('caAddr');if(!a)return;navigator.clipboard.writeText(a.textContent).then(function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy';},1500);}).catch(function(){b.textContent='Copy failed';});});})();</script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#04181c" />
+<title>Elysium Mail — mail for wallets</title>
+<meta name="description" content="Mail for wallets on Elysium, the L2 for Hyperliquid. Write to any address or name.els. Every message is signed by the sender's wallet." />
+<link rel="icon" type="image/png" href="./logo/favicon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="./css/landing.css" />
+</head>
+<body class="landing">
+<header class="l-nav">
+  <a class="l-brand" href="./index.html"><img class="logo-img" src="./logo/logo-dark.png" alt="Elysium Mail logo" />Elysium Mail</a>
+  <a class="l-cta" href="./app.html">Open inbox <span>→</span></a>
+</header>
+
+<main>
+  <section class="l-hero">
+    <p class="l-kicker">Mail for wallets · Elysium</p>
+    <h1>Your wallet,<br /><em>finally readable.</em></h1>
+    <p class="l-sub">Write to any address or <b>name.els</b>. Every message is signed by the sender's wallet and kept encrypted for the recipient's. No account. No password. No phone.</p>
+    <p class="ca-line">CA : 0x7c478e004e3524f58dd109229effb0ebd93a15dc</p>
+    <div class="l-actions">
+      <a class="l-btn primary" href="./app.html">Open your inbox</a>
+      <a class="l-btn" href="./app.html#settings">Name your wallet</a>
+    </div>
+  </section>
+
+  <section class="l-frame">
+    <div class="l-window">
+      <div class="l-window-bar"><i></i><i></i><i></i><span>mail.elysium</span></div>
+      <div class="l-app">
+        <aside class="l-side">
+          <span class="l-new">✎&nbsp; New mail</span>
+          <a class="on">Inbox <b>2</b></a><a>Starred</a><a>Sent</a><a>Drafts</a><a>Archive</a><a>Trash</a>
+          <small>People</small><a>Contacts</a><a>Notifications</a>
+        </aside>
+        <div class="l-list">
+          <div class="l-list-head">Inbox <small>4 messages</small></div>
+          <div class="l-row unread sel"><span class="avatar" style="background:#00b2bf">MA</span><div><b>maya.els</b><span>Re: Launch on Elysium mainnet</span><small>Yes, let's ship Friday. I signed the…</small></div><time>09:41</time></div>
+          <div class="l-row unread"><span class="avatar" style="background:#34dd9f">AL</span><div><b>alex.els</b><span>Invoice for September</span><small>Attached the HYPE amount for the…</small></div><time>Yesterday</time></div>
+          <div class="l-row"><span class="avatar" style="background:#34b7dd">0X</span><div><b>0x7f3a…9c21</b><span>gm</span><small>Found your card via QR, nice product</small></div><time>Sep 9</time></div>
+          <div class="l-row"><span class="avatar" style="background:#1f9e86">TE</span><div><b>team.els</b><span>Welcome to Elysium Mail</span><small>Your wallet is now reachable by name.</small></div><time>Sep 8</time></div>
+        </div>
+        <div class="l-read">
+          <div class="l-read-bar"><span>↩ Reply</span><span>↪ Forward</span><span>☆ Star</span><span>Archive</span><span>Delete</span></div>
+          <h3>Re: Launch on Elysium mainnet</h3>
+          <div class="l-msg">
+            <div class="l-msg-head"><span class="avatar" style="background:#00b2bf">MA</span><div><b>maya.els</b><small>0x9c4e…21af · to you</small></div><time>Today, 09:41 · <i>Wallet-signed</i></time></div>
+            <p>Yes, let's ship Friday. I signed the release notes from my wallet, you'll see the signature under the message.</p>
+            <p>Send the final HYPE invoice to <b>maya.els</b>, no need to paste my address anymore.</p>
+            <p>— M</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="l-points">
+    <div><span>01</span><h2>One signature to sign in</h2><p>Connect any EVM wallet and sign one readable sentence. Your inbox stays open for 24 hours. It can never move funds.</p></div>
+    <div><span>02</span><h2>A name, not an address</h2><p>Claim <b>you.els</b> in Settings. People write to the name, the name resolves to your wallet. Rename whenever you like.</p></div>
+    <div><span>03</span><h2>Mail you already know</h2><p>Subjects, threads, reply and forward, drafts, archive, starred, search, read receipts. Contacts and notifications included.</p></div>
+  </section>
+
+  <section class="l-proof">
+    <div class="l-proof-text">
+      <p class="l-kicker">Under the hood</p>
+      <h2>Signed by the sender.<br />Encrypted for the recipient.</h2>
+      <p>Each message carries a <code>personal_sign</code> signature over its exact text, so authorship is provable and impersonation is impossible. Mailboxes are stored AES-256-GCM encrypted in private storage and only unlock with a signature from the owning wallet.</p>
+    </div>
+    <pre class="l-code"><span class="c">Elysium Mail message</span>
+From:      <span class="k">0x5e0d…4d68</span>  <span class="c">josh.els</span>
+To:        <span class="k">0xaf8c…9651</span>  <span class="c">maya.els</span>
+Subject:   Re: Launch on Elysium mainnet
+Timestamp: 1789401503321
+
+Yes, let's ship Friday.
+
+<span class="c">signature</span>  <span class="s">0x8f21c0…a41b</span>  <span class="ok">✓ verified</span></pre>
+  </section>
+
+  <section class="l-final">
+    <h2>Open your inbox.</h2>
+    <p>Works with Hyperliquid Wallet, MetaMask, Rabby and any EVM wallet.</p>
+    <a class="l-btn primary" href="./app.html">Open Elysium Mail</a>
+  </section>
+</main>
+
+<footer class="l-foot">
+  <span>Elysium Mail · Hyperliquid</span>
+  <nav><a href="./app.html">Inbox</a><a href="./app.html#contacts">Contacts</a><a href="./app.html#settings">Settings</a><a href="./docs.html">Docs</a><a href="https://elysium.kinetiq.xyz" target="_blank" rel="noopener">Elysium ↗</a><a href="https://x.com/elysium_mail" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>@elysium_mail</a></nav>
+</footer>
+<script src="./js/landing.js"></script>
+<script>(function(){var b=document.getElementById('caCopy');if(!b)return;b.addEventListener('click',function(){var a=document.getElementById('caAddr');if(!a)return;navigator.clipboard.writeText(a.textContent).then(function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy';},1500);}).catch(function(){b.textContent='Copy failed';});});})();</script>
+</body>
+</html>
